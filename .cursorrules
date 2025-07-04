@@ -1,0 +1,122 @@
+# Cursor AI Rules for JobsInAccra
+
+## Project Overview
+A modern job board application with advanced search, filtering, structured job listings, tagging, and dashboards for candidates and employers.
+
+### Technical Stack
+- Platform: web
+- Framework: React
+- Key Dependencies: react-query, styled-components, chakra, mui, zustand, redux, shadcn, tailwind
+
+---
+
+## Code Generation Rules
+
+### 1. Project Structure
+- Maintain established directory and file organization
+- Place components in appropriate directories (e.g., /components, /pages)
+- Use kebab-case for file names, PascalCase for components
+- Respect module boundaries
+- Keep related files (component, styles, tests) together
+
+### 2. Code Style
+- Use 2-space indentation
+- Max line length: 100 characters
+- Use single quotes for JS/TS, double quotes for JSX
+- Always use semicolons
+- Use trailing commas in multi-line objects/arrays
+- Consistent naming (camelCase, PascalCase, UPPER_SNAKE_CASE)
+- Follow TypeScript best practices
+
+### 3. Component Guidelines
+- Use functional components
+- Type props with interfaces
+- Use appropriate state management (hooks, zustand, redux)
+- Handle errors with error boundaries
+- Use handler naming for events (onClick, onChange)
+- Optimize rendering (React.memo, useCallback, useMemo)
+
+### 4. Type System
+- Use strict type checking
+- Prefer interfaces for objects, types for unions/intersections
+- Use generics for reusable logic
+- Handle null/undefined with optional chaining/nullish coalescing
+- Use type guards for complex types
+- Avoid any type
+- Document complex types
+
+### 5. API Integration
+- Follow RESTful conventions
+- Use react-query for data fetching
+- Handle errors and loading states
+- Type API requests/responses
+- Use secure authentication (JWT/OAuth2)
+- Validate API responses
+- Document API usage
+- Implement caching where appropriate
+
+### 6. State Management
+- Use zustand or redux for global state
+- Follow immutability principles
+- Use actions/reducers for redux
+- Handle side effects with middleware (redux-thunk, redux-saga)
+- Optimize state updates
+- Document state structure and selectors
+
+### 7. Testing Requirements
+- Write unit and integration tests for all features
+- Use Arrange-Act-Assert pattern
+- Mock API and state as needed
+- Test error and edge cases
+- Maintain 90%+ test coverage
+- Document test cases
+
+### 8. Security Guidelines
+- Validate all user input
+- Sanitize data output
+- Use secure authentication and authorization
+- Protect sensitive data (never expose secrets)
+- Follow OWASP Top 10
+- Implement proper CORS
+- Use secure, up-to-date dependencies
+
+### 9. Performance Rules
+- Use code splitting and lazy loading
+- Optimize bundle size
+- Minimize unnecessary re-renders
+- Use caching for expensive operations
+- Optimize assets (images, SVGs)
+- Follow performance best practices
+
+### 10. Documentation
+- Write clear, concise documentation
+- Use JSDoc for functions, classes, types
+- Provide usage examples
+- Document edge cases and complex logic
+- Include type information
+- Follow project documentation standards
+
+---
+
+## Best Practices
+
+### Code Quality
+- Write self-documenting code
+- Keep functions small and focused
+- Follow DRY principles
+- Use meaningful names
+- Implement proper error handling
+- Write maintainable code
+
+### Performance
+- Optimize bundle size
+- Use code splitting and caching
+- Optimize rendering
+- Use lazy loading
+
+### Security
+- Validate user input
+- Sanitize data output
+- Use proper authentication
+- Protect sensitive data
+- Follow security best practices

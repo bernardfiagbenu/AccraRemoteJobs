@@ -1,0 +1,66 @@
+# AccraRemoteJobs - Robots.txt
+# The leading remote job board for Accra, Ghana
+
+User-agent: *
+Allow: /
+
+# Allow crawling of all pages
+Allow: /jobs/
+Allow: /companies/
+Allow: /resources/
+Allow: /about
+Allow: /contact
+Allow: /terms
+Allow: /privacy
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important files
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /manifest.json
+Allow: /favicon.ico
+
+# Crawl delay (optional - be respectful to servers)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://accraremotejobs.com/sitemap.xml
+
+# Additional sitemaps for specific content types
+Sitemap: https://accraremotejobs.com/sitemap-jobs.xml
+Sitemap: https://accraremotejobs.com/sitemap-companies.xml
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Contact information for webmaster
+# If you need to contact us about crawling issues, email: hello@accraremotejobs.com 

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Find remote jobs in Accra, Ghana and worldwide. Work from anywhere with top companies hiring remote developers, designers, and tech professionals." />
+  <meta name="keywords" content="remote jobs, work from home, accra, ghana, remote work, telecommute, virtual jobs" />
+  <meta name="author" content="Bernard Figbenu" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://accraremotejobs.com/">
+  <meta property="og:title" content="AccraRemoteJobs - Remote Jobs in Accra & Beyond">
+  <meta property="og:description" content="Find remote jobs in Accra, Ghana and worldwide. Work from anywhere with top companies hiring remote developers, designers, and tech professionals.">
+  <meta property="og:image" content="https://accraremotejobs.com/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://accraremotejobs.com/">
+  <meta property="twitter:title" content="AccraRemoteJobs - Remote Jobs in Accra & Beyond">
+  <meta property="twitter:description" content="Find remote jobs in Accra, Ghana and worldwide. Work from anywhere with top companies hiring remote developers, designers, and tech professionals.">
+  <meta property="twitter:image" content="https://accraremotejobs.com/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+
+  <title>AccraRemoteJobs - Remote Jobs in Accra, Ghana</title>
+</head>
+<body class="light-mode">
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <i class="fas fa-home"></i>
+        <span>AccraRemoteJobs</span>
+      </div>
+      
+      <div class="header-controls">
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+        
+        <!-- Login/Signup Button (shown when not logged in) -->
+        <div id="auth-buttons" class="auth-buttons">
+          <button class="btn btn-outline" onclick="signInWithGoogle()">
+            <i class="fab fa-google"></i>
+            Sign In
+          </button>
+        </div>
+        
+        <!-- Profile Dropdown (shown when logged in) -->
+        <div id="profile-dropdown" class="profile-dropdown" style="display: none;">
+          <button class="profile-toggle" onclick="toggleProfile()">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+          </button>
+          <div class="profile-menu" id="profileMenu">
+            <div class="profile-header">
+              <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <strong id="userEmail">user@example.com</strong>
+                <small id="userRole">Admin</small>
+              </div>
+            </div>
+            <div class="profile-actions">
+              <button class="profile-btn" onclick="showPostJobForm()" id="postJobBtn">
+                <i class="fas fa-plus"></i>
+                Post Job
+              </button>
+              <button class="logout-btn" onclick="signOut()">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-area">
+      <!-- Job Search Section -->
+      <section id="jobSearch" class="job-search">
+        <div class="search-header">
+          <h1>Remote Jobs in Accra</h1>
+          <p>Find your next remote opportunity with global companies</p>
+        </div>
+        
+        <div class="search-filters">
+          <div class="search-input">
+            <input type="text" id="searchInput" placeholder="Search jobs...">
+            <label for="searchInput">Search</label>
+          </div>
+        </div>
+        
+        <div class="job-listings" id="jobListings">
+          <!-- Jobs will be loaded here -->
+        </div>
+      </section>
+
+      <!-- Post Job Section (Admin Only) -->
+      <section id="postJob" class="post-job" style="display: none;">
+        <div class="post-job-header">
+          <h2>Post a New Job</h2>
+          <p>Add a remote job opportunity to the board</p>
+        </div>
+        
+        <form class="post-job-form" id="postJobForm">
+          <div class="form-group">
+            <label for="jobTitle">Job Title *</label>
+            <input type="text" id="jobTitle" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="companyName">Company Name *</label>
+            <input type="text" id="companyName" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="jobLocation">Location</label>
+            <input type="text" id="jobLocation" placeholder="Remote, Accra, etc.">
+          </div>
+          
+          <div class="form-group">
+            <label for="jobSalary">Salary Range</label>
+            <input type="text" id="jobSalary" placeholder="$50k - $80k, etc.">
+          </div>
+          
+          <div class="form-group">
+            <label for="jobDescription">Job Description *</label>
+            <textarea id="jobDescription" rows="6" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="applicationUrl">Application URL *</label>
+            <input type="url" id="applicationUrl" placeholder="https://company.com/careers" required>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="showSection('jobSearch')">Cancel</button>
+            <button type="submit" class="btn">Post Job</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>AccraRemoteJobs</h3>
+        <p>The leading remote job board for Accra, Ghana. Connect talented remote workers with innovative companies worldwide.</p>
+      </div>
+      
+      <div class="footer-section">
+        <h4>For Job Seekers</h4>
+        <ul>
+          <li><a href="#" onclick="showSection('jobSearch')">Browse Remote Jobs</a></li>
+          <li><a href="#" onclick="signInWithGoogle()" id="footerSignIn">Sign In</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#" onclick="showLegalModal('about')">About Us</a></li>
+          <li><a href="#" onclick="showLegalModal('contact')">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 AccraRemoteJobs. Made with <i class="fas fa-heart"></i> in Accra, Ghana by Bernard Figbenu</p>
+    </div>
+  </footer>
+
+  <!-- Legal Modals -->
+  <div id="legalModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLegalModal()">&times;</span>
+      <div id="legalContent">
+        <h2>About Us</h2>
+        <p>AccraRemoteJobs is the premier platform connecting remote workers in Accra, Ghana with global opportunities. We believe in the power of remote work to create economic opportunities and bridge geographical barriers.</p>
+        <p>Our mission is to make remote work accessible to everyone in Accra and beyond, connecting talented professionals with innovative companies worldwide.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html> 

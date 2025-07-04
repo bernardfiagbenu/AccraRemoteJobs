@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - JobsInAccra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .offline-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            margin: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .offline-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .offline-icon i {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #718096;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .offline-features {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .offline-features h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0.5rem;
+            min-width: 120px;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .retry-button:active {
+            transform: translateY(0);
+        }
+
+        .cached-jobs-button {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0.5rem;
+            min-width: 120px;
+        }
+
+        .cached-jobs-button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fed7d7;
+            color: #c53030;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .connection-status.online {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .connection-status.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .offline-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .retry-button,
+            .cached-jobs-button {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        .dark-mode {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #e2e8f0;
+        }
+
+        .dark-mode .offline-container {
+            background: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .dark-mode h1 {
+            color: #f7fafc;
+        }
+
+        .dark-mode .subtitle {
+            color: #a0aec0;
+        }
+
+        .dark-mode .offline-features {
+            background: #4a5568;
+        }
+
+        .dark-mode .offline-features h3 {
+            color: #f7fafc;
+        }
+
+        .dark-mode .feature-list li {
+            color: #cbd5e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status" id="connectionStatus">
+        <i class="fas fa-wifi"></i> Checking connection...
+    </div>
+
+    <div class="offline-container">
+        <div class="offline-icon">
+            <i class="fas fa-wifi-slash"></i>
+        </div>
+        
+        <h1>You're Offline</h1>
+        <p class="subtitle">
+            Don't worry! JobsInAccra works offline too. You can still access your saved jobs and browse cached content.
+        </p>
+
+        <div class="offline-features">
+            <h3>What you can do offline:</h3>
+            <ul class="feature-list">
+                <li>View previously loaded job listings</li>
+                <li>Access your saved jobs</li>
+                <li>Read job descriptions</li>
+                <li>Prepare job applications</li>
+                <li>Update your profile</li>
+            </ul>
+        </div>
+
+        <button class="retry-button" onclick="retryConnection()">
+            <i class="fas fa-sync-alt"></i> Try Again
+        </button>
+        
+        <button class="cached-jobs-button" onclick="viewCachedJobs()">
+            <i class="fas fa-briefcase"></i> View Cached Jobs
+        </button>
+    </div>
+
+    <script>
+        // Check connection status
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            const isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Back Online!';
+                statusElement.className = 'connection-status online show';
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                statusElement.innerHTML = '<i class="fas fa-wifi-slash"></i> Offline';
+                statusElement.className = 'connection-status show';
+            }
+        }
+
+        // Retry connection
+        function retryConnection() {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            button.disabled = true;
+            
+            // Simulate connection check
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    window.location.reload();
+                } else {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    showNotification('Still offline. Please check your internet connection.');
+                }
+            }, 2000);
+        }
+
+        // View cached jobs
+        function viewCachedJobs() {
+            if ('serviceWorker' in navigator && 'caches' in window) {
+                // Try to get cached jobs from IndexedDB
+                if ('indexedDB' in window) {
+                    const request = indexedDB.open('JobsInAccraDB', 1);
+                    
+                    request.onsuccess = function(event) {
+                        const db = event.target.result;
+                        const transaction = db.transaction(['jobs'], 'readonly');
+                        const store = transaction.objectStore('jobs');
+                        const getRequest = store.getAll();
+                        
+                        getRequest.onsuccess = function() {
+                            const jobs = getRequest.result;
+                            if (jobs.length > 0) {
+                                showCachedJobs(jobs);
+                            } else {
+                                showNotification('No cached jobs found. Please connect to the internet to load jobs.');
+                            }
+                        };
+                    };
+                } else {
+                    showNotification('Offline storage not available. Please connect to the internet.');
+                }
+            } else {
+                showNotification('Offline features not supported in this browser.');
+            }
+        }
+
+        // Show cached jobs in a modal
+        function showCachedJobs(jobs) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                border-radius: 12px;
+                padding: 2rem;
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+                margin: 2rem;
+            `;
+            
+            content.innerHTML = `
+                <h2 style="margin-bottom: 1rem; color: #2d3748;">Cached Jobs (${jobs.length})</h2>
+                <div style="margin-bottom: 1rem;">
+                    ${jobs.map(job => `
+                        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <h3 style="color: #2d3748; margin-bottom: 0.5rem;">${job.title}</h3>
+                            <p style="color: #718096; margin-bottom: 0.5rem;">${job.company} • ${job.location}</p>
+                            <p style="color: #4a5568; font-size: 0.9rem;">${job.description.substring(0, 150)}...</p>
+                        </div>
+                    `).join('')}
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    background: #667eea;
+                    color: white;
+                    border: none;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                ">Close</button>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #2d3748;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                z-index: 10000;
+                max-width: 90%;
+                text-align: center;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Event listeners
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Initialize
+        updateConnectionStatus();
+        
+        // Check for dark mode preference
+        if (localStorage.getItem('darkMode') === 'true' || 
+            (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html> 

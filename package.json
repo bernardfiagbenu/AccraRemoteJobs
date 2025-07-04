@@ -1,0 +1,35 @@
+{
+  "name": "accra-remote-jobs",
+  "version": "1.0.0",
+  "description": "Remote job board for Accra, Ghana - Find remote jobs worldwide",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8081 -c-1",
+    "dev": "http-server -p 8080 -c-1 --cors",
+    "build": "echo 'No build process needed for static site'",
+    "deploy": "echo 'Deploy to your hosting platform'"
+  },
+  "keywords": [
+    "remote-jobs",
+    "accra",
+    "ghana",
+    "job-board",
+    "remote-work",
+    "firebase",
+    "authentication"
+  ],
+  "author": "Bernard Figbenu",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/accra-remote-jobs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/accra-remote-jobs/issues"
+  },
+  "homepage": "https://accraremotejobs.com"
+} 
